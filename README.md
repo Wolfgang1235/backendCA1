@@ -6,7 +6,6 @@
 - [Daniel Drobek](https://github.com/DanielD99)
 - [Owais Dashti](https://github.com/OwaisAD)
 - [Thomas Fritzbøger](https://github.com/thomasfritzboger)
-Hej
 
 ## How to run
 
