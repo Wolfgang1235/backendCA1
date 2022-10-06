@@ -21,13 +21,6 @@ public class AddressFacadeTest {
     private static EntityManagerFactory emf;
     private static AddressFacade facade;
 
-    //CityInfo c1 = new CityInfo(2800, "Kongens Lyngby", new LinkedHashSet<>());
-   // CityInfo c2 = new CityInfo(3000, "Helsingør", new LinkedHashSet<>());
-
-    //Address a1 = new Address(new AddressDTO("Sushi Blv", "2tv", false, c2));
-
-    //Address a2 = new Address(new AddressDTO("Kanalvej", "5a", false, c1));
-
     private CityInfo c1 = new CityInfo(2800, "Kongens Lyngby", new LinkedHashSet<>());
     private CityInfo c2 = new CityInfo(3000, "Helsingør", new LinkedHashSet<>());
     private Phone phone1 = new Phone("12345678", "Telenor", false);
