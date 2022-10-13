@@ -1,13 +1,13 @@
 package entities;
 
 import dtos.PersonDTO;
-import facades.AddressFacade;
-import facades.PhoneFacade;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @Entity
 @NamedQuery(name = "Person.deleteAllRows", query = "DELETE from Person")
@@ -47,7 +47,7 @@ public class Person {
     @JoinTable(name = "HOBBY_has_PERSON",
             joinColumns = @JoinColumn(name = "PERSON_id"),
             inverseJoinColumns = @JoinColumn(name = "HOBBY_id"))
-    private List<Hobby> hobbies = new ArrayList<>();
+    private final List<Hobby> hobbies = new ArrayList<>();
 
     public Person() {
     }
@@ -117,10 +117,6 @@ public class Person {
 
     public List<Hobby> getHobbies() {
         return hobbies;
-    }
-
-    public void setHobbies(List<Hobby> hobbies) {
-        this.hobbies = hobbies;
     }
 
     @Override

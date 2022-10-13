@@ -37,7 +37,7 @@ public class Address {
     private CityInfo cityInfo;
 
     @OneToMany(mappedBy = "address")
-    private Set<Person> people = new LinkedHashSet<>();
+    private final Set<Person> people = new LinkedHashSet<>();
 
     public Address() {
     }
@@ -69,24 +69,12 @@ public class Address {
         return street;
     }
 
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
     public String getAdditionalInfo() {
         return additionalInfo;
     }
 
-    public void setAdditionalInfo(String additionalInfo) {
-        this.additionalInfo = additionalInfo;
-    }
-
     public boolean getIsPrivate() {
         return isPrivate;
-    }
-
-    public void setIsPrivate(boolean isPrivate) {
-        this.isPrivate = isPrivate;
     }
 
     public CityInfo getCityInfo() {
@@ -95,18 +83,6 @@ public class Address {
 
     public void setCityInfo(CityInfo cityInfo) {
         this.cityInfo = cityInfo;
-    }
-
-    public Set<Person> getPeople() {
-        return people;
-    }
-
-    public void setPeople(Set<Person> people) {
-        this.people = people;
-    }
-
-    public Integer getCityZip() {
-        return cityInfo.getZipCode();
     }
 
     @Override

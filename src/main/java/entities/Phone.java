@@ -3,9 +3,7 @@ package entities;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.LinkedHashSet;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 @NamedQuery(name = "Phone.deleteAllRows", query = "DELETE from Phone")
@@ -61,26 +59,9 @@ public class Phone {
         return number;
     }
 
-    public void setNumber(String number) {
-        this.number = number;
-    }
-
     public String getDescription() {
         return description;
     }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public boolean getIsPrivate() {
-        return isPrivate;
-    }
-
-    public void setIsPrivate(boolean isPrivate) {
-        this.isPrivate = isPrivate;
-    }
-
 
 
     @Override

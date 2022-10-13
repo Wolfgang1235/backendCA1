@@ -5,7 +5,6 @@ import com.google.gson.GsonBuilder;
 import dtos.HobbyDTO;
 import errorhandling.EntityNotFoundException;
 import facades.HobbyFacade;
-import facades.PersonFacade;
 import utils.EMF_Creator;
 
 import javax.persistence.EntityManagerFactory;
@@ -16,7 +15,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-//Todo Remove or change relevant parts before ACTUAL use
+
 @Path("hobbies")
 public class HobbyResource {
 

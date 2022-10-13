@@ -66,24 +66,12 @@ public class CityInfo {
         return zipCode;
     }
 
-    public void setZipCode(Integer zipCode) {
-        this.zipCode = zipCode;
-    }
-
     public String getCityName() {
         return cityName;
     }
 
-    public void setCityName(String cityName) {
-        this.cityName = cityName;
-    }
-
     public Set<Address> getAddresses() {
         return addresses;
-    }
-
-    public void setAddresses(Set<Address> addresses) {
-        this.addresses = addresses;
     }
 
     @Override

@@ -43,7 +43,7 @@ public class Hobby {
     @JoinTable(name = "HOBBY_has_PERSON",
             joinColumns = @JoinColumn(name = "HOBBY_id"),
             inverseJoinColumns = @JoinColumn(name = "PERSON_id"))
-    private List<Person> people = new ArrayList<>();
+    private final List<Person> people = new ArrayList<>();
 
     public Hobby() {
     }
@@ -76,10 +76,6 @@ public class Hobby {
         return wikiLink;
     }
 
-    public void setWikiLink(String wikiLink) {
-        this.wikiLink = wikiLink;
-    }
-
     public String getName() {
         return name;
     }
@@ -90,10 +86,6 @@ public class Hobby {
 
     public String getCategory() {
         return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
     }
 
     public String getType() {
@@ -108,23 +100,8 @@ public class Hobby {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public List<Person> getPeople() {
         return people;
-    }
-
-    public void setPeople(List<Person> people) {
-        this.people = people;
-    }
-
-    public void addPerson(Person person) {
-        this.people.add(person);
-        if(!person.getHobbies().contains(this)) { //what is "this"
-            person.addHobbies(this);
-        }
     }
 
     @Override

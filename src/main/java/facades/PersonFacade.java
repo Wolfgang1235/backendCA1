@@ -3,22 +3,13 @@ package facades;
 import dtos.PersonDTO;
 import entities.Hobby;
 import entities.Person;
-import entities.Phone;
 import errorhandling.EntityNotFoundException;
-import errorhandling.GenericExceptionMapper;
 import utils.EMF_Creator;
 
 import javax.persistence.*;
 import javax.ws.rs.WebApplicationException;
 import java.util.List;
-import java.util.Objects;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-/**
- *
- * Rename Class to a relevant name Add add relevant facade methods
- */
 public class PersonFacade {
 
     private static PersonFacade instance;
@@ -26,12 +17,7 @@ public class PersonFacade {
 
     //Private Constructor to ensure Singleton
     private PersonFacade() {}
-    
-    /**
-     * 
-     * @param _emf
-     * @return an instance of this facade class.
-     */
+
     public static PersonFacade getPersonFacade(EntityManagerFactory _emf) {
         if (instance == null) {
             emf = _emf;
@@ -44,20 +30,6 @@ public class PersonFacade {
         return emf.createEntityManager();
     }
 
-
-    /*public PersonDTO create(PersonDTO pd){
-        Person person = new Person(pd);
-
-        EntityManager em = getEntityManager();
-        try {
-            em.getTransaction().begin();
-            em.persist(person);
-            em.getTransaction().commit();
-        } finally {
-            em.close();
-        }
-        return new PersonDTO(person);
-    }*/
 
     public Person createPerson(Person person) {
 
@@ -76,8 +48,7 @@ public class PersonFacade {
         EntityManager em = getEntityManager();
         try {
             TypedQuery<PersonDTO> query = em.createQuery("SELECT NEW dtos.PersonDTO(p) FROM Person p", PersonDTO.class);
-            List<PersonDTO> persons = query.getResultList();
-            return persons;
+            return query.getResultList();
         } finally {
             em.close();
         }
@@ -111,7 +82,7 @@ public class PersonFacade {
         try {
             TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p WHERE p.phone.number = :number", Person.class);
             query.setParameter("number", phoneNumber);
-            List<Person> personList = query.getResultList(); //bør testes
+            List<Person> personList = query.getResultList();
 
             if(personList.size() == 0) {
                 throw new EntityNotFoundException("The entity Person with number: " + phoneNumber + " was not found");
@@ -125,7 +96,7 @@ public class PersonFacade {
 
     public Person addHobbyToPerson(int personId, Hobby hobby) throws EntityNotFoundException{
         EntityManager em = getEntityManager();
-        Person person = null;
+        Person person;
         try {
             person = em.find(Person.class, personId);
 
@@ -150,7 +121,7 @@ public class PersonFacade {
 
     public Person removeHobbyFromPerson(int personId, Hobby hobby) throws EntityNotFoundException{
         EntityManager em = getEntityManager();
-        Person person = null;
+        Person person;
         try {
             person = em.find(Person.class, personId);
 
@@ -160,8 +131,8 @@ public class PersonFacade {
             // check if hobby doesn't exist in the person list
             boolean found = false;
             List<Hobby> hobbies = person.getHobbies();
-            for (int i = 0; i < hobbies.size(); i++) {
-                if(hobbies.get(i).getId().intValue() == hobby.getId().intValue()) {
+            for (Hobby value : hobbies) {
+                if (value.getId().intValue() == hobby.getId().intValue()) {
                     person.removeHobbies(hobby);
                     found = true;
                     em.getTransaction().begin();
@@ -199,7 +170,7 @@ public class PersonFacade {
                 throw new WebApplicationException("Found no persons with ZipCode: " + zipCode);
             }
 
-            return PersonDTO.getDtos(persons);
+            return PersonDTO.getDTOs(persons);
         } finally {
             em.close();
         }
@@ -208,15 +179,15 @@ public class PersonFacade {
     public List<PersonDTO> getAllPersonsGivenAHobbyId(int hobbyId) {
         EntityManager em = getEntityManager();
         try {
-            TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p JOIN p.hobbies ph WHERE ph.id = :hobbyid", Person.class);
-            query.setParameter("hobbyid", hobbyId);
+            TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p JOIN p.hobbies ph WHERE ph.id = :hobbyId", Person.class);
+            query.setParameter("hobbyId", hobbyId);
             List<Person> persons = query.getResultList();
 
             if(persons.size() == 0) {
                 throw new WebApplicationException("Found no persons with hobby id: " + hobbyId);
             }
 
-            return PersonDTO.getDtos(persons);
+            return PersonDTO.getDTOs(persons);
         } finally {
             em.close();
         }
@@ -225,8 +196,8 @@ public class PersonFacade {
     public Long getAmountOfPersonsGivenAHobby(int hobbyId) {
         EntityManager em = getEntityManager();
         try {
-            TypedQuery<Long> query = em.createQuery("SELECT count(p) FROM Person p JOIN p.hobbies ph WHERE ph.id= :hobbyid", Long.class);
-            query.setParameter("hobbyid", hobbyId);
+            TypedQuery<Long> query = em.createQuery("SELECT count(p) FROM Person p JOIN p.hobbies ph WHERE ph.id= :hobbyId", Long.class);
+            query.setParameter("hobbyId", hobbyId);
             return query.getSingleResult();
         } finally {
             em.close();
@@ -267,7 +238,6 @@ public class PersonFacade {
 
     public static void main(String[] args) {
         emf = EMF_Creator.createEntityManagerFactory();
-        //PersonFacade pf = getPersonFacade(emf);
 
     }
 

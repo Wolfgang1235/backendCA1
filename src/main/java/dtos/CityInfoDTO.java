@@ -1,6 +1,5 @@
 package dtos;
 
-import entities.Address;
 import entities.CityInfo;
 
 import javax.validation.constraints.NotNull;
@@ -8,11 +7,7 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
-/**
- * A DTO for the {@link CityInfo} entity
- */
 public class CityInfoDTO implements Serializable {
     private Integer id;
     @NotNull
@@ -21,12 +16,6 @@ public class CityInfoDTO implements Serializable {
     @NotNull
     private final String cityName;
     private final List<AddressDto> addresses = new ArrayList<>();
-
-    public CityInfoDTO(Integer id, Integer zipCode, String cityName) {
-        this.id = id;
-        this.zipCode = zipCode;
-        this.cityName = cityName;
-    }
 
     public CityInfoDTO(CityInfo cityInfo) {
         if(cityInfo.getId() != null) {
@@ -49,9 +38,7 @@ public class CityInfoDTO implements Serializable {
 
     public static List<CityInfoDTO> getDTOs(List<CityInfo> cityInfoList) {
         List<CityInfoDTO> cityInfoDTOS = new ArrayList<>();
-        cityInfoList.forEach(cityInfo -> {
-            cityInfoDTOS.add(new CityInfoDTO(cityInfo));
-        });
+        cityInfoList.forEach(cityInfo -> cityInfoDTOS.add(new CityInfoDTO(cityInfo)));
         return cityInfoDTOS;
     }
 
@@ -67,10 +54,6 @@ public class CityInfoDTO implements Serializable {
         return cityName;
     }
 
-    public List<AddressDto> getAddresses() {
-        return addresses;
-    }
-
     @Override
     public String toString() {
         return getClass().getSimpleName() + "(" +
@@ -80,9 +63,6 @@ public class CityInfoDTO implements Serializable {
                 "addresses = " + addresses + ")";
     }
 
-    /**
-     * A DTO for the {@link Address} entity
-     */
     public static class AddressDto implements Serializable {
         private final Integer id;
         @Size(max = 45)
@@ -102,18 +82,6 @@ public class CityInfoDTO implements Serializable {
 
         public Integer getId() {
             return id;
-        }
-
-        public String getStreet() {
-            return street;
-        }
-
-        public String getAdditionalInfo() {
-            return additionalInfo;
-        }
-
-        public boolean getIsPrivate() {
-            return isPrivate;
         }
 
         @Override

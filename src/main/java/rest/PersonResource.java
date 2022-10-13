@@ -2,17 +2,15 @@ package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import dtos.AddressDTO;
 import dtos.CityInfoDTO;
-import dtos.HobbyDTO;
 import dtos.PersonDTO;
-import entities.*;
+import entities.CityInfo;
+import entities.Hobby;
+import entities.Person;
 import errorhandling.EntityNotFoundException;
 import facades.*;
 import utils.EMF_Creator;
 
-import javax.json.Json;
-import javax.json.JsonObject;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -26,8 +24,6 @@ public class PersonResource {
 
     private static final EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory();
     private static final PersonFacade FACADE =  PersonFacade.getPersonFacade(EMF);
-    private static final AddressFacade addressFacade =  AddressFacade.getAddressFacade(EMF);
-    private static final PhoneFacade phoneFacade =  PhoneFacade.getPhoneFacade(EMF);
     private static final CityInfoFacade cityInfoFacade =  CityInfoFacade.getCityInfoFacade(EMF);
     private static final HobbyFacade hobbyFacade =  HobbyFacade.getHobbyFacade(EMF);
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
@@ -59,7 +55,7 @@ public class PersonResource {
 
         Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(email);
         boolean isValidEmail = matcher.find();
-        if(!isValidEmail || email == null) {
+        if(!isValidEmail) {
             errorMsg += "Parsed email was in a wrong format. ";
         }
 
@@ -74,7 +70,7 @@ public class PersonResource {
         String phoneNumber = personFromJson.getPhone().getNumber();
         String VALID_PHONE_NUMBER_REGEX = "(?<!\\d)\\d{8}(?!\\d)";
         boolean isValidNumber = phoneNumber.matches(VALID_PHONE_NUMBER_REGEX);
-        if(!isValidNumber || phoneNumber == null) {
+        if(!isValidNumber) {
             errorMsg += "Invalid number parsed. Please enter a valid danish phone number (8 digits). ";
         }
 
@@ -88,7 +84,7 @@ public class PersonResource {
         String VALID_ZIPCODE_REGEX = "^[0-9]{3,4}$"; // this here can be made to check if the zipcode given is a correct danish zipcode
         String zipCodeToStr = String.valueOf(zipCode);
         boolean checkZipCode = zipCodeToStr.matches(VALID_ZIPCODE_REGEX);
-        if(!checkZipCode || zipCodeToStr == null) {
+        if(!checkZipCode) {
             errorMsg += "Unknown ZipCode format: " + zipCode + ". Please enter a valid danish zipcode (typically 3 or 4 digits). ";
         }
 
@@ -119,9 +115,9 @@ public class PersonResource {
     }
 
     @GET
-    @Path("{personId}/addhobby/{hobbyId}")
+    @Path("{personId}/addHobby/{hobbyId}")
     @Produces({MediaType.APPLICATION_JSON})
-    public Response addHobbyToPerson(@PathParam("personId") int personId, @PathParam("hobbyId") int hobbyId) throws EntityNotFoundException {
+    public Response addHobbyToPerson(@PathParam("personId") int personId, @PathParam("hobbyId") int hobbyId) {
 
         Hobby foundHobby;
         Person person;
@@ -138,7 +134,7 @@ public class PersonResource {
     }
 
     @GET
-    @Path("{personId}/removehobby/{hobbyId}")
+    @Path("{personId}/removeHobby/{hobbyId}")
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
     public Response removeHobbyFromPerson(@PathParam("personId") int personId, @PathParam("hobbyId") int hobbyId) throws EntityNotFoundException {
@@ -200,7 +196,7 @@ public class PersonResource {
         Hobby hobby = hobbyFacade.getHobbyById(hobbyId);
         Long peopleAmount = FACADE.getAmountOfPersonsGivenAHobby(hobbyId);
 
-        return "{\"hobby\":\"" + hobby.getName() + "\"" + "," + "\"personcount\":\""+ peopleAmount +"\"" + "}";
+        return "{\"hobby\":\"" + hobby.getName() + "\"" + "," + "\"person count\":\""+ peopleAmount +"\"" + "}";
     }
 
     @PUT

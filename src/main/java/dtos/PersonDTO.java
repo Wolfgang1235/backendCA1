@@ -8,9 +8,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A DTO for the {@link entities.Person} entity
- */
 public class PersonDTO implements Serializable {
     private Integer id;
     @Size(max = 45)
@@ -23,29 +20,10 @@ public class PersonDTO implements Serializable {
     @NotNull
     private final String lastName;
 
-    private Phone phone;
-    private PhoneDTO phoneDTO;
-
-    private AddressDTO addressDTO;
-    private AddressInnerDTO address;
-
-    //private List<AddressInnerDTO> addresses = new ArrayList<>();
+    private final Phone phone;
+    private final AddressInnerDTO address;
 
     private final List<HobbyInnerDTO> hobbies = new ArrayList<>();
-
-    public PersonDTO(Integer id, String email, String firstName, String lastName) {
-        this.id = id;
-        this.email = email;
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
-
-    public PersonDTO(String email, String firstName, String lastName) {
-        this.email = email;
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
-
 
     public PersonDTO( String email, String firstName, String lastName, Phone phone, AddressInnerDTO address) {
         this.email = email;
@@ -66,20 +44,15 @@ public class PersonDTO implements Serializable {
 
         this.address = new AddressInnerDTO(person.getAddress());
 
-        person.getHobbies().forEach(hobby -> {
-            hobbies.add(new HobbyInnerDTO(hobby));
-        });
+        person.getHobbies().forEach(hobby -> hobbies.add(new HobbyInnerDTO(hobby)));
     }
 
 
-    public static List<PersonDTO> getDtos(List<Person> persons) {
+    public static List<PersonDTO> getDTOs(List<Person> persons) {
         List<PersonDTO> personDTOS = new ArrayList<>();
-        persons.forEach(person -> {
-            personDTOS.add(new PersonDTO(person));
-        });
+        persons.forEach(person -> personDTOS.add(new PersonDTO(person)));
         return personDTOS;
     }
-
 
     public Integer getId() {
         return id;
@@ -101,18 +74,6 @@ public class PersonDTO implements Serializable {
         return phone;
     }
 
-//    public List<AddressInnerDTO> getAddresses() {
-//        return addresses;
-//    }
-
-    public List<HobbyInnerDTO> getHobbies() {
-        return hobbies;
-    }
-
-    public void addToHobbyInnerDTO(HobbyDTO hobbyDTO) {
-        this.hobbies.add(new HobbyInnerDTO(new Hobby(hobbyDTO)));
-    }
-
     @Override
     public String toString() {
         return "PersonDTO{" +
@@ -126,9 +87,6 @@ public class PersonDTO implements Serializable {
                 '}';
     }
 
-    /**
-     * A DTO for the {@link entities.Hobby} entity
-     */
     public static class HobbyInnerDTO implements Serializable {
         private final Integer id;
         private final String wikiLink;
@@ -136,15 +94,6 @@ public class PersonDTO implements Serializable {
         private final String category;
         private final String type;
         private final String description;
-
-        public HobbyInnerDTO(Integer id, String wikiLink, String name, String category, String type, String description) {
-            this.id = id;
-            this.wikiLink = wikiLink;
-            this.name = name;
-            this.category = category;
-            this.type = type;
-            this.description = description;
-        }
 
         public HobbyInnerDTO(Hobby hobby) {
             this.id = hobby.getId();
@@ -159,24 +108,12 @@ public class PersonDTO implements Serializable {
             return id;
         }
 
-        public String getWikiLink() {
-            return wikiLink;
-        }
-
         public String getName() {
             return name;
         }
 
-        public String getCategory() {
-            return category;
-        }
-
         public String getType() {
             return type;
-        }
-
-        public String getDescription() {
-            return description;
         }
 
         @Override
@@ -192,10 +129,10 @@ public class PersonDTO implements Serializable {
     }
 
     public static class AddressInnerDTO implements Serializable {
-        private Integer id;
-        private String street;
-        private String additionalInfo = "";
-        private boolean isPrivate;
+        private final Integer id;
+        private final String street;
+        private final String additionalInfo;
+        private final boolean isPrivate;
 
         public CityInfoInnerDTO cityInfo;
 
@@ -212,18 +149,9 @@ public class PersonDTO implements Serializable {
             return id;
         }
 
-        public String getStreet() {
-            return street;
-        }
-
-        public String getAdditionalInfo() {
-            return additionalInfo;
-        }
-
         public boolean isPrivate() {
             return isPrivate;
         }
-
 
         @Override
         public String toString() {
@@ -235,33 +163,19 @@ public class PersonDTO implements Serializable {
                     '}';
         }
 
-
         public static class CityInfoInnerDTO implements Serializable {
-            private Integer id;
-            private Integer zipCode;
-            private String cityName;
-
-            public CityInfoInnerDTO(Integer id, Integer zipCode, String cityName) {
-                this.id = id;
-                this.zipCode = zipCode;
-                this.cityName = cityName;
-            }
+            private final Integer id;
+            private final Integer zipCode;
+            private final String cityName;
 
             public CityInfoInnerDTO(Integer zipCode, String cityName){
+                this.id = getId();
                 this.zipCode = zipCode;
                 this.cityName = cityName;
             }
 
             public Integer getId() {
                 return id;
-            }
-
-            public Integer getZipCode() {
-                return zipCode;
-            }
-
-            public String getCityName() {
-                return cityName;
             }
 
             @Override

@@ -1,33 +1,23 @@
 package facades;
 
 import dtos.AddressDTO;
+import dtos.CityInfoDTO;
 import entities.Address;
 import entities.CityInfo;
-import dtos.CityInfoDTO;
-import utils.EMF_Creator;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
-/**
- *
- * Rename Class to a relevant name Add add relevant facade methods
- */
+
 public class AddressFacade {
 
     private static AddressFacade instance;
     private static EntityManagerFactory emf;
 
-    //Private Constructor to ensure Singleton
     private AddressFacade() {}
-    
-    /**
-     * 
-     * @param _emf
-     * @return an instance of this facade class.
-     */
+
     public static AddressFacade getAddressFacade(EntityManagerFactory _emf) {
         if (instance == null) {
             emf = _emf;
@@ -81,14 +71,6 @@ public class AddressFacade {
         }
     }
 
-    /*public static void main(String[] args) {
-        emf = EMF_Creator.createEntityManagerFactory();
-        //PersonFacade pf = getPersonFacade(emf);
-        AddressFacade addressFacade = getAddressFacade(emf);
-        //System.out.println(addressFacade.getCityInfoByZipCode(2800));
-        //System.out.println(getAddressById(1));
-
-    }*/
 
 
 }

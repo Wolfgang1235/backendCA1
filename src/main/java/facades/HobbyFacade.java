@@ -11,23 +11,15 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
-/**
- *
- * Rename Class to a relevant name Add add relevant facade methods
- */
+
 public class HobbyFacade {
 
     private static HobbyFacade instance;
     private static EntityManagerFactory emf;
 
-    //Private Constructor to ensure Singleton
     private HobbyFacade() {}
     
-    /**
-     * 
-     * @param _emf
-     * @return an instance of this facade class.
-     */
+
     public static HobbyFacade getHobbyFacade(EntityManagerFactory _emf) {
         if (instance == null) {
             emf = _emf;
@@ -94,8 +86,8 @@ public class HobbyFacade {
     public Hobby getHobbyByName(String hobbyName) throws EntityNotFoundException {
         EntityManager em = getEntityManager();
         try {
-            TypedQuery<Hobby> query = em.createQuery("SELECT h FROM Hobby h WHERE h.name = :hname", Hobby.class);
-            query.setParameter("hname", hobbyName);
+            TypedQuery<Hobby> query = em.createQuery("SELECT h FROM Hobby h WHERE h.name = :hName", Hobby.class);
+            query.setParameter("hName", hobbyName);
             List<Hobby> hobbyList = query.getResultList();
 
             if(hobbyList.size() == 0) {
@@ -110,8 +102,6 @@ public class HobbyFacade {
 
     public static void main(String[] args) {
         emf = EMF_Creator.createEntityManagerFactory();
-        //HobbyFacade hf = new HobbyFacade();
-        //System.out.println(hf.getAllHobbies());
 
     }
 

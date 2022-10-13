@@ -68,7 +68,7 @@ public class EMF_Creator {
         } else {
             System.out.println("Using the DEV database via persistence-unit --> pu ");
         }
-        EntityManagerFactory emf = null;
+        EntityManagerFactory emf;
         try {
          emf =  Persistence.createEntityManagerFactory(puName, null);
        

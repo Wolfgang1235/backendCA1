@@ -1,20 +1,11 @@
 package dtos;
 
-import entities.Phone;
-
 public class PhoneDTO {
 
     private int id;
-    private String number;
-    private String description;
+    private final String number;
+    private final String description;
     private boolean isPrivate;
-
-    public PhoneDTO(Phone phone) {
-        this.id = phone.getId();
-        this.number = phone.getNumber();
-        this.description = phone.getDescription();
-        this.isPrivate = phone.getIsPrivate();
-    }
 
     public PhoneDTO(String number, String description, boolean isPrivate) {
         this.number = number;
@@ -28,22 +19,6 @@ public class PhoneDTO {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getNumber() {
-        return number;
-    }
-
-    public void setNumber(String number) {
-        this.number = number;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public boolean isPrivate() {

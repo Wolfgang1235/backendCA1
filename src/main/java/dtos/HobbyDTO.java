@@ -1,7 +1,6 @@
 package dtos;
 
 import entities.Hobby;
-import entities.Person;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -9,9 +8,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A DTO for the {@link entities.Hobby} entity
- */
 public class HobbyDTO implements Serializable {
     private Integer id;
     @Size(max = 255)
@@ -28,15 +24,6 @@ public class HobbyDTO implements Serializable {
     @Size(max = 355)
     private final String description;
     private final List<PersonInnerDTO> people = new ArrayList<>();
-
-    public HobbyDTO(Integer id, String wikiLink, String name, String category, String type, String description) {
-        this.id = id;
-        this.wikiLink = wikiLink;
-        this.name = name;
-        this.category = category;
-        this.type = type;
-        this.description = description;
-    }
 
     public HobbyDTO(String wikiLink, String name, String category, String type, String description) {
         this.wikiLink = wikiLink;
@@ -70,9 +57,7 @@ public class HobbyDTO implements Serializable {
 
     public static List<HobbyDTO> getDTOs(List<Hobby> hobbies) {
         List<HobbyDTO> hobbyDTOS = new ArrayList<>();
-        hobbies.forEach(hobby -> {
-            hobbyDTOS.add(new HobbyDTO(hobby));
-        });
+        hobbies.forEach(hobby -> hobbyDTOS.add(new HobbyDTO(hobby)));
         return hobbyDTOS;
     }
 
@@ -100,10 +85,6 @@ public class HobbyDTO implements Serializable {
         return description;
     }
 
-    public List<PersonInnerDTO> getPeople() {
-        return people;
-    }
-
     @Override
     public String toString() {
         return getClass().getSimpleName() + "(" +
@@ -116,9 +97,7 @@ public class HobbyDTO implements Serializable {
                 "people = " + people + ")";
     }
 
-    /**
-     * A DTO for the {@link entities.Person} entity
-     */
+
     public static class PersonInnerDTO implements Serializable {
         private final Integer id;
         @Size(max = 45)
@@ -140,18 +119,6 @@ public class HobbyDTO implements Serializable {
 
         public Integer getId() {
             return id;
-        }
-
-        public String getEmail() {
-            return email;
-        }
-
-        public String getFirstName() {
-            return firstName;
-        }
-
-        public String getLastName() {
-            return lastName;
         }
 
         @Override

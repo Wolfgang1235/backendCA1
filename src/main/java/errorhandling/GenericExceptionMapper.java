@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package errorhandling;
 
 import com.google.gson.Gson;
@@ -30,9 +26,9 @@ public class GenericExceptionMapper implements ExceptionMapper<Throwable>  {
         Response.StatusType type = getStatusType(ex);
         ExceptionDTO err;
         if (ex instanceof WebApplicationException) {
-            err = new ExceptionDTO(type.getStatusCode(), ((WebApplicationException) ex).getMessage());
+            err = new ExceptionDTO(type.getStatusCode(), ex.getMessage());
         } else if (ex instanceof EntityNotFoundException) {
-            err = new ExceptionDTO(404, ((EntityNotFoundException) ex).getMessage()); // vi får forkert type code, vi skal have 404
+            err = new ExceptionDTO(404, ex.getMessage());
         } else {
             err = new ExceptionDTO(type.getStatusCode(), type.getReasonPhrase());
         }
